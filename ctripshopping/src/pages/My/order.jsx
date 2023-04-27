@@ -38,8 +38,9 @@ function Order() {
       <div
         style={{
           width: "50rem",
+          minHeight: "22.5rem",
           padding: "3rem ",
-          margin: "auto",
+          margin: "1.5rem auto 0",
           borderLeft: "3px solid #CCCCCC",
           borderRight: "3px solid #CCCCCC",
         }}
@@ -48,7 +49,7 @@ function Order() {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            margin: "2rem 8rem 2rem 1rem",
+            margin: "2rem 8rem 0rem 1rem",
             textAlign: "center",
           }}
         >

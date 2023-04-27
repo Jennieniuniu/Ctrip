@@ -5,14 +5,15 @@ const connection = require("../db/multiconnection");
 module.exports = (req, res) => {
   if (req.body.hasOwnProperty("operate")) {
     if (req.body.operate === "取消订单") {
-      const { status, workid, orderid, orderprice, ordercoupon } = req.body;
+      const { status, workid, orderid, orderprice, ordercoupon, priceid } =
+        req.body;
       let cost = orderprice - ordercoupon < 0 ? 0 : orderprice - ordercoupon;
       if (status === "已支付") {
         let sqlOrderCancel =
-          "DELETE FROM myorder WHERE orderid=?;UPDATE user SET balance=balance+?,coupon=coupon+? WHERE workid=?;SELECT * FROM user WHERE workid=?;SELECT * FROM myorder WHERE workid=?";
+          "DELETE FROM myorder WHERE orderid=?;UPDATE user SET balance=balance+?,coupon=coupon+? WHERE workid=?;SELECT * FROM user WHERE workid=?;SELECT * FROM myorder WHERE workid=?;UPDATE ticket SET stock=stock+1 WHERE id=?";
         connection(
           sqlOrderCancel,
-          [orderid, cost, ordercoupon, workid, workid, workid],
+          [orderid, cost, ordercoupon, workid, workid, workid, priceid],
           (result) => {
             if (result[3].length === 0) {
               result[3] = ["暂无订单，快去选购吧！"];
@@ -22,7 +23,7 @@ module.exports = (req, res) => {
         );
       } else {
         let sqlOrderCancel =
-          "DELETE FROM myorder WHERE orderid=?;UPDATE user SET balance=balance,coupon=coupon WHERE workid=?;SELECT * FROM user WHERE workid=?;SELECT * FROM myorder WHERE workid=?";
+          "DELETE FROM myorder WHERE orderid=?;UPDATE user SET balance=balance,coupon=coupon WHERE workid=?;SELECT * FROM user WHERE workid=?;SELECT * FROM myorder WHERE workid=?;";
         connection(
           sqlOrderCancel,
           [orderid, workid, workid, workid],
@@ -51,13 +52,13 @@ module.exports = (req, res) => {
       );
     }
     if (req.body.operate === "去支付") {
-      const { orderid, price, coupon, workid } = req.body;
+      const { orderid, price, coupon, workid, priceid } = req.body;
       let cost = price - coupon < 0 ? 0 : price - coupon;
       const sqlOrderCancel =
-        "UPDATE myorder SET status=? WHERE orderid=?;UPDATE user SET balance=balance-?,coupon=coupon-? WHERE workid=?;SELECT * FROM user WHERE workid=?;SELECT * FROM myorder WHERE workid=?";
+        "UPDATE myorder SET status=? WHERE orderid=?;UPDATE user SET balance=balance-?,coupon=coupon-? WHERE workid=?;SELECT * FROM user WHERE workid=?;SELECT * FROM myorder WHERE workid=?;UPDATE ticket SET stock=stock-1 WHERE id=?";
       connection(
         sqlOrderCancel,
-        ["已支付", orderid, cost, coupon, workid, workid, workid],
+        ["已支付", orderid, cost, coupon, workid, workid, workid, priceid],
         (result) => {
           if (result[3].length === 0) {
             result[3] = ["暂无订单，快去选购吧！"];

@@ -14,7 +14,7 @@ import Pay from "./pages/Order/pay";
 import Ordersuccess from "./pages/Order/ordersuccess";
 import Order from "./pages/My/order";
 import Admin from "./pages/Admin/admin";
-
+import Robort from "./components/robort";
 // redux
 import { Provider } from "react-redux";
 import store from "./store";
@@ -83,90 +83,98 @@ if (tk) {
 }
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <ConfigProvider theme={{ token: { colorPrimary: "#66CCFF" } }}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Navigate to="/" />} />
-            <Route
-              path="/user"
-              element={
-                <ProtectedUserRoute>
-                  <Travel />
-                </ProtectedUserRoute>
-              }
-            />
-            <Route path="/*" element={<Navigate to="/login" />} />
-            <Route
-              path="/user/travel/location"
-              element={
-                <ProtectedUserRoute>
-                  <Travellist />
-                </ProtectedUserRoute>
-              }
-            />
-            <Route
-              path="/user/travel/location/choose"
-              element={
-                <ProtectedUserRoute>
-                  <Choose />
-                </ProtectedUserRoute>
-              }
-            />
-            <Route
-              path="/user/travel/location/information"
-              element={
-                <ProtectedUserRoute>
-                  <Information />
-                </ProtectedUserRoute>
-              }
-            />
-            <Route
-              path="/user/travel/location/pay"
-              element={
-                <ProtectedUserRoute>
-                  <Pay />
-                </ProtectedUserRoute>
-              }
-            />
-            <Route
-              path="/user/travel/location/success"
-              element={
-                <ProtectedUserRoute>
-                  <Ordersuccess />
-                </ProtectedUserRoute>
-              }
-            />
-            <Route
-              path="/user/hotel"
-              element={
-                <ProtectedUserRoute>
-                  <Hotel />
-                </ProtectedUserRoute>
-              }
-            />
-            <Route
-              path="/user/my"
-              element={
-                <ProtectedUserRoute>
-                  <Order />
-                </ProtectedUserRoute>
-              }
-            />
-            {/* 管理员 */}
-            <Route
-              path="/admin/*"
-              element={
-                <ProtectedAdminRoute>
-                  <Admin />
-                </ProtectedAdminRoute>
-              }
-            />
-          </Routes>
-        </BrowserRouter>
-      </ConfigProvider>
-    </Provider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <Provider store={store}>
+    <ConfigProvider theme={{ token: { colorPrimary: "#66CCFF" } }}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Navigate to="/" />} />
+          <Route
+            path="/user"
+            element={
+              <ProtectedUserRoute>
+                <Travel />
+              </ProtectedUserRoute>
+            }
+          />
+          <Route path="/*" element={<Navigate to="/login" />} />
+          <Route
+            path="/user/travel/location"
+            element={
+              <ProtectedUserRoute>
+                <Travellist />
+              </ProtectedUserRoute>
+            }
+          />
+          <Route
+            path="/user/travel/location/choose"
+            element={
+              <ProtectedUserRoute>
+                <Choose />
+              </ProtectedUserRoute>
+            }
+          />
+          <Route
+            path="/user/travel/location/information"
+            element={
+              <ProtectedUserRoute>
+                <Information />
+              </ProtectedUserRoute>
+            }
+          />
+          <Route
+            path="/user/travel/location/pay"
+            element={
+              <ProtectedUserRoute>
+                <Pay />
+              </ProtectedUserRoute>
+            }
+          />
+          <Route
+            path="/user/travel/location/success"
+            element={
+              <ProtectedUserRoute>
+                <Ordersuccess />
+              </ProtectedUserRoute>
+            }
+          />
+          <Route
+            path="/user/hotel"
+            element={
+              <ProtectedUserRoute>
+                <Hotel />
+              </ProtectedUserRoute>
+            }
+          />
+          <Route
+            path="/user/robot"
+            element={
+              <ProtectedUserRoute>
+                <Robort />
+              </ProtectedUserRoute>
+            }
+          />
+          <Route
+            path="/user/my"
+            element={
+              <ProtectedUserRoute>
+                <Order />
+              </ProtectedUserRoute>
+            }
+          />
+          {/* 管理员 */}
+          <Route
+            path="/admin/*"
+            element={
+              <ProtectedAdminRoute>
+                <Admin />
+              </ProtectedAdminRoute>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </ConfigProvider>
+  </Provider>
+  // </React.StrictMode>
 );

@@ -27,7 +27,14 @@ function Ordersuccess(props) {
     <>
       <Usernavigation />
       <Sideselect />
-      <div style={{ width: "50rem", padding: "3rem 5rem", margin: "auto" }}>
+      <div
+        style={{
+          width: "50rem",
+          height: "24rem",
+          padding: "3rem 5rem",
+          margin: "auto",
+        }}
+      >
         <Steps
           items={[
             {

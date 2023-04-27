@@ -1,5 +1,6 @@
 import React from "react";
 import { HeartFilled, StarFilled } from "@ant-design/icons";
+import { Modal } from "antd";
 import { ticketDivStyle } from "../config/userStyle";
 // redux配置
 import { connect } from "react-redux";
@@ -21,12 +22,23 @@ function Ticketshow(props) {
     const selectlocation = selectInfo.name;
     // 票价信息
     const { data } = await ticketFn.pricedatailAc({ selectlocation });
-    const priceInfo = data;
-    // 存储图片到本地
-    localStorage.setItem("selectPictureurl", JSON.stringify(selectInfo.url));
-    navigate("/user/travel/location/choose", {
-      state: { selectInfo, priceInfo },
-    });
+    if (data.status === 0) {
+      const priceInfo = data.data;
+      // console.log(priceInfo);
+      // 存储图片到本地
+      localStorage.setItem("selectPictureurl", JSON.stringify(selectInfo.url));
+      navigate("/user/travel/location/choose", {
+        state: { selectInfo, priceInfo },
+      });
+    } else {
+      const warning = () => {
+        Modal.warning({
+          title: "温馨提示",
+          content: data.msg,
+        });
+      };
+      warning();
+    }
   };
   return props.data.map((item) => (
     <div key={item.name} style={ticketDivStyle}>
@@ -35,8 +47,8 @@ function Ticketshow(props) {
           src={item.url}
           alt="图片"
           style={{
-            height: "10rem",
-            width: "10rem",
+            height: "6rem",
+            width: "6rem",
             margin: "1rem",
             borderRadius: "2rem",
           }}
@@ -49,15 +61,19 @@ function Ticketshow(props) {
       </div>
 
       <div>
-        <div style={{ margin: "2rem" }}>
+        <div style={{ margin: "1rem" }}>
           <StarFilled style={{ color: "#FF9933", fontSize: "1.5rem" }} />
           {item.score}
         </div>
-        <div style={{ margin: "2rem" }}>
+        <div style={{ margin: "1rem" }}>
           <HeartFilled style={{ color: "#CC3366", fontSize: "1.5rem" }} />
           {item.collect}
         </div>
-        <button data={item.id} onClick={bookTicket}>
+        <button
+          data={item.id}
+          onClick={bookTicket}
+          style={{ background: "#00CCFF", borderRadius: "1rem" }}
+        >
           立即预定
         </button>
       </div>

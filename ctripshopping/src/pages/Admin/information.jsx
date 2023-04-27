@@ -211,11 +211,17 @@ function Information(props) {
     const newData = {
       key: count + 1,
       workid: workid + 1,
+      name: "姓名 ",
+      balance: "余额 ",
+      coupon: "优惠券",
+      cardid: "身份证",
+      phone: "手机",
+      email: "邮箱",
       role: "员工",
     };
     const operate = "添加信息";
     const { data } = await adminFn.adminAc({ operate, newData });
-    console.log(data);
+    // console.log(data);
     if (data.status === 0) {
       success(data.msg);
       localStorage.setItem("userAll", JSON.stringify(data.tabledata));

@@ -9,7 +9,7 @@ const headerStyle = {
   justifyContent: "space-between",
 };
 const contentStyle = {
-  minHeight: "23rem",
+  minHeight: "24rem",
   padding: "2rem",
 };
 export { headerStyle, contentStyle };

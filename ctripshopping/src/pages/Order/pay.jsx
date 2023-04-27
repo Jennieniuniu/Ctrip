@@ -21,9 +21,11 @@ function Pay(props) {
   const { userData, orderFn } = props;
   const selectTicketInfo = useLocation();
   const { selectInfo, ticketChooseInfo } = selectTicketInfo.state;
+  const priceId = ticketChooseInfo.priceId;
+  // console.log(priceId);
   const localBalance = parseInt(localStorage.getItem("localBalance"));
   const localCoupon = parseInt(localStorage.getItem("localCoupon"));
-  const orderStatusStr = "已支付";
+  let orderStatusStr = "未支付";
   const warning = () => {
     Modal.warning({
       title: "余额不足",
@@ -35,15 +37,17 @@ function Pay(props) {
     const newBalance = localBalance + localCoupon - ticketChooseInfo.priceAll;
     const newCoupon = 0;
     const workid = userData.workid;
-    const { data } = await orderFn.syncOrderAc({
-      newBalance,
-      newCoupon,
-      workid,
-      orderStatusStr,
-    });
     if (newBalance < 0) {
       warning();
     } else {
+      orderStatusStr = "已支付";
+      const { data } = await orderFn.syncOrderAc({
+        newBalance,
+        newCoupon,
+        workid,
+        orderStatusStr,
+        priceId,
+      });
       const newUserInfo = { ...userData, balance: newBalance, coupon: 0 };
       // 存储余额到本地
       localStorage.setItem("localBalance", newBalance);

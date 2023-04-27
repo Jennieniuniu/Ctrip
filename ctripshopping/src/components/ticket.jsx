@@ -87,7 +87,7 @@ function Ticket(props) {
     <>
       <Content style={ticketStyle}>
         <div
-          style={{ paddingBottom: "2rem", borderBottom: "2px solid #CCCCCC" }}
+          style={{ paddingBottom: "0.5rem", borderBottom: "2px solid #CCCCCC" }}
         >
           <h1>门票预订</h1>
           <ShopTwoTone

@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 function Ordershow(props) {
   // console.log(props);
   const { myInfo, orderInfo } = props.data;
+  // console.log(orderInfo);
   const { userData, orderFn } = props;
   const navigate = useNavigate();
   const localBalance = parseInt(localStorage.getItem("localBalance"));
@@ -55,6 +56,7 @@ function Ordershow(props) {
     let price = parseInt(e.target.attributes[1].value);
     let coupon = parseInt(e.target.attributes[2].value);
     const workid = parseInt(e.target.attributes[3].value);
+    const priceid = parseInt(e.target.attributes[4].value);
     const operate = "去支付";
     const { data } = await orderFn.myOrderAc({
       operate,
@@ -62,6 +64,7 @@ function Ordershow(props) {
       price,
       coupon,
       workid,
+      priceid,
     });
     const myInfo = data[2];
     const orderInfo = data[3];
@@ -88,6 +91,7 @@ function Ordershow(props) {
       const ordercoupon = parseInt(e.target.attributes[2].value);
       const workid = parseInt(e.target.attributes[3].value);
       const status = e.target.attributes[4].value;
+      const priceid = e.target.attributes[5].value;
       const { data } = await orderFn.myOrderAc({
         operate,
         status,
@@ -95,6 +99,7 @@ function Ordershow(props) {
         orderid,
         orderprice,
         ordercoupon,
+        priceid,
       });
       const myInfo = data[2];
       const orderInfo = data[3];
@@ -140,7 +145,7 @@ function Ordershow(props) {
               justifyContent: "space-around",
               border: "2px solid #666666",
               borderRadius: "1rem",
-              margin: "2rem",
+              margin: "0.5rem auto",
             }}
             onClick={OrderAction}
           >
@@ -226,6 +231,7 @@ function Ordershow(props) {
                 data-coupon={item.coupon}
                 data-workid={item.workid}
                 data-status={item.status}
+                data-priceid={item.priceid}
               >
                 取消订单
               </button>
@@ -305,6 +311,7 @@ function Ordershow(props) {
                     data-balance={item.price}
                     data-coupon={item.coupon}
                     data-workid={item.workid}
+                    data-priceid={item.priceid}
                     onClick={payOk}
                     style={greenBtn}
                   >

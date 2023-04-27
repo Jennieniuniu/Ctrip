@@ -10,7 +10,7 @@ const loginHeaderStyle = {
   justifyContent: "space-between",
 };
 const loginContentStyle = {
-  height: "23rem",
+  height: "24rem",
   display: "flex",
   justifyContent: "space-around",
   alignItems: "center",
@@ -47,7 +47,7 @@ const footerStyle = {
   flexDirection: "column",
 };
 const photoStyle = {
-  margin: "5rem  2rem 2rem 12rem",
+  margin: "10rem  2rem 2rem 12rem",
   width: "60rem",
   height: "25rem",
   background: "#FFCC66",
@@ -55,17 +55,18 @@ const photoStyle = {
 
 const showStyle = {
   textAlign: "center",
-  margin: "5rem  2rem 2rem 12rem",
+  margin: "2rem  2rem 0rem 12rem",
   width: "60rem",
-  border: "3px solid #000",
-  borderRadius: "1rem",
+  borderTop: "3px solid #000",
+  // borderRadius: "1rem",
 };
 // ----------------------------------导航栏布局----------------------------------
 const navLayoutStyle = {
-  width: "78rem",
-  position: "sticky",
+  width: "78.5rem",
+  paddingLeft: "0.5rem",
+  position: "fixed",
   top: "0rem",
-  zIndex: "20",
+  zIndex: "50",
 };
 // 导航栏
 const navMenuStyle = {
@@ -101,11 +102,11 @@ const ticketDivStyle = {
   justifyContent: "space-between",
   border: "2px solid #666666",
   borderRadius: "1rem",
-  margin: "2rem",
+  margin: "0.5rem 2rem",
 };
 const ticketStyle = {
-  margin: "5rem auto 2rem",
-  padding: "2rem",
+  margin: "7rem auto 2rem",
+  padding: "0rem 2rem",
   width: "50rem",
   border: "3px solid 	#666666",
   borderRadius: "2rem",
@@ -113,8 +114,8 @@ const ticketStyle = {
 // -------------------------------------选票----------------------------------------
 const outerDivStyle = {
   width: "50rem",
-  padding: "3rem 1rem 3rem 5rem",
-  margin: "0 0rem 0 3rem",
+  padding: "3rem 1rem 3rem 1rem",
+  margin: "4rem auto 0 ",
 };
 const ticketOuterDivDStyle = {
   width: "43rem",
@@ -122,25 +123,22 @@ const ticketOuterDivDStyle = {
   justifyContent: "space-between",
   border: "3px solid #CCCCCC",
   borderRadius: "1rem",
-  padding: "1rem ",
-  margin: "2rem",
+  padding: "0.5rem ",
+  margin: "0.5rem 2rem",
 };
 const imgTicketStyle = {
-  height: "10rem",
-  margin: "1rem",
+  height: "7rem",
+  margin: "0.5rem 1rem",
   borderRadius: "2rem",
 };
 const iconStyle = {
   color: "#FF9933",
-  fontSize: "1.5rem",
+  fontSize: "1rem",
   margin: "0 1rem 0 0",
 };
 const formOuterStyle = {
   flexFlow: "row wrap",
   width: "50rem",
-  borderTop: "1px solid #CCC",
-  padding: "1rem 0rem ",
-  margin: "0rem",
 };
 const formStyle = {
   width: "40rem",
@@ -149,8 +147,9 @@ const formStyle = {
   borderRadius: "1rem",
 };
 const ticketInfoStyle = {
+  height: "12rem",
   border: "3px solid #CCC",
-  margin: "1rem 3rem",
+  margin: "0.5rem 3rem",
   padding: "1rem 1rem",
   borderRadius: "1rem",
   backgroundColor: "#87CEEB",
@@ -159,7 +158,7 @@ const ticketKindStyle = {
   textAlign: "center",
   width: "10rem",
   padding: "0 0.5rem",
-  margin: "0 0 1rem 0.5rem",
+  margin: "0 0 0.5rem 0.5rem",
   borderRadius: "5rem",
   border: "2px solid #FF9900",
   fontSize: "20px",

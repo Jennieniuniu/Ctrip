@@ -38,9 +38,11 @@ const disabledDate = (current) => {
 // ======================================选购=======================================
 function Choose(props) {
   const { ticketFn, orderFn } = props;
+
   const selectdata = useLocation();
   const navigate = useNavigate();
   const { selectInfo, priceInfo } = selectdata.state;
+
   const [ticketDate, setticketDate] = useState(dateFormat(new Date()));
   const [ticketPrice, setticketPrice] = useState(priceInfo);
   // 购票数量
@@ -53,6 +55,17 @@ function Choose(props) {
     Modal.warning({
       title: "余票不足",
       content: "您选的票型没有余票啦！看看其他日期的吧！",
+    });
+  };
+  const noStart = () => {
+    // setTimeout(() => {
+    //   navigate("/user/travel/location/choose", {
+    //     state: { selectInfo, priceInfo },
+    //   });
+    // }, 3000);
+    Modal.warning({
+      title: "温馨提示",
+      content: "尚未开始售票！",
     });
   };
   const increaseTicket1 = (value) => {
@@ -98,51 +111,58 @@ function Choose(props) {
     stock: item.stock,
   }));
 
-  data[0].number = (
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <Button type="primary" shape="circle" onClick={increaseTicket1}>
-        +
-      </Button>
-      <Input
-        ref={kind1Num}
-        style={{ width: "2.5rem", margin: "0 1rem" }}
-        defaultValue={0}
-      />
-      <Button type="primary" shape="circle" onClick={decreaseTicket1}>
-        -
-      </Button>
-    </div>
-  );
-  data[1].number = (
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <Button type="primary" shape="circle" onClick={increaseTicket2}>
-        +
-      </Button>
-      <Input
-        ref={kind2Num}
-        style={{ width: "2.5rem", margin: "0 1rem" }}
-        defaultValue={0}
-      />
-      <Button type="primary" shape="circle" onClick={decreaseTicket2}>
-        -
-      </Button>
-    </div>
-  );
-  data[2].number = (
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <Button type="primary" shape="circle" onClick={increaseTicket3}>
-        +
-      </Button>
-      <Input
-        ref={kind3Num}
-        style={{ width: "2.5rem", margin: "0 1rem" }}
-        defaultValue={0}
-      />
-      <Button type="primary" shape="circle" onClick={decreaseTicket3}>
-        -
-      </Button>
-    </div>
-  );
+  data.length === 0
+    ? noStart()
+    : (data[0].number = (
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Button type="primary" shape="circle" onClick={increaseTicket1}>
+            +
+          </Button>
+          <Input
+            ref={kind1Num}
+            style={{ width: "2.5rem", margin: "0 1rem" }}
+            defaultValue={0}
+          />
+          <Button type="primary" shape="circle" onClick={decreaseTicket1}>
+            -
+          </Button>
+        </div>
+      ));
+
+  data.length === 0
+    ? console.log("尚未售票")
+    : (data[1].number = (
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Button type="primary" shape="circle" onClick={increaseTicket2}>
+            +
+          </Button>
+          <Input
+            ref={kind2Num}
+            style={{ width: "2.5rem", margin: "0 1rem" }}
+            defaultValue={0}
+          />
+          <Button type="primary" shape="circle" onClick={decreaseTicket2}>
+            -
+          </Button>
+        </div>
+      ));
+  data.length === 0
+    ? console.log("尚未售票")
+    : (data[2].number = (
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Button type="primary" shape="circle" onClick={increaseTicket3}>
+            +
+          </Button>
+          <Input
+            ref={kind3Num}
+            style={{ width: "2.5rem", margin: "0 1rem" }}
+            defaultValue={0}
+          />
+          <Button type="primary" shape="circle" onClick={decreaseTicket3}>
+            -
+          </Button>
+        </div>
+      ));
 
   // 选择日期
   const dateChoose = async (value) => {
@@ -153,7 +173,11 @@ function Choose(props) {
       selectlocation,
       chooseDate,
     });
-    setticketPrice(data);
+    if (data.length === 0) {
+      noStart();
+    } else {
+      setticketPrice(data);
+    }
   };
   // 检查是否点击购票
   const noChoose = () => {
@@ -166,6 +190,7 @@ function Choose(props) {
   const buyTicket = () => {
     let ticketAll = [];
     let priceArr = [];
+    let priceId=[];
     const kind1 = kind1Num.current.input.value;
     const kind2 = kind2Num.current.input.value;
     const kind3 = kind3Num.current.input.value;
@@ -177,14 +202,17 @@ function Choose(props) {
     for (let i = 0; i < kind1; i++) {
       ticketAll.push("成人票");
       priceArr.push(ticketPrice[0].price);
+      priceId.push(priceInfo[0].id)
     }
     for (let i = 0; i < kind2; i++) {
       ticketAll.push("老人票");
       priceArr.push(ticketPrice[1].price);
+      priceId.push(priceInfo[1].id)
     }
     for (let i = 0; i < kind3; i++) {
       ticketAll.push("儿童票");
       priceArr.push(ticketPrice[2].price);
+      priceId.push(priceInfo[2].id)
     }
     const priceAll =
       kind1 * ticketPrice[0].price +
@@ -198,6 +226,7 @@ function Choose(props) {
       ticketAll,
       priceArr,
       priceAll,
+      priceId
     };
     if (kind1 == 0 && kind2 == 0 && kind3 == 0) {
       noChoose();
@@ -214,7 +243,13 @@ function Choose(props) {
     <>
       <Usernavigation />
       <Sideselect />
-      <div style={{ width: "50rem", padding: "3rem 5rem", margin: "auto" }}>
+      <div
+        style={{
+          margin: "4rem auto 3rem",
+          width: "50rem",
+          padding: "3rem 5rem",
+        }}
+      >
         <Steps
           items={[
             {
@@ -245,8 +280,8 @@ function Choose(props) {
             justifyContent: "space-between",
             border: "3px solid #CCCCCC",
             borderRadius: "1rem",
-            padding: "2rem ",
-            margin: "2rem",
+            margin: "0.3rem auto",
+            width: "40rem",
           }}
         >
           <div style={{ display: "flex" }}>
@@ -254,36 +289,34 @@ function Choose(props) {
               src={pictureshow}
               alt="图片"
               style={{
-                height: "12rem",
-                width: "12rem",
+                height: "10rem",
+                width: "10rem",
                 margin: "1rem",
                 borderRadius: "2rem",
               }}
             />
             <div>
-              <h1>{selectInfo.name}</h1>
-              <h3>{selectInfo.description}</h3>
-              <div style={{ fontSize: "1rem" }}>
+              <h2>{selectInfo.name}</h2>
+              <p>{selectInfo.description}</p>
+              <div style={{ fontSize: "0.5rem", margin: "-0.5rem 0 0 0 " }}>
                 <DashboardTwoTone
-                  style={{ fontSize: "1.5rem", margin: "0.5rem" }}
+                  style={{ fontSize: "1rem", margin: "0.5rem" }}
                 />
-                营业时间{selectInfo.time}
+                营业时间：{selectInfo.time}
               </div>
-              <div style={{ fontSize: "1rem" }}>
-                <PhoneTwoTone
-                  style={{ fontSize: "1.5rem", margin: "0.5rem" }}
-                />
-                热线电话{selectInfo.phone}
+              <div style={{ fontSize: "0.5rem" }}>
+                <PhoneTwoTone style={{ fontSize: "1rem", margin: "0.5rem" }} />
+                热线电话：{selectInfo.phone}
               </div>
             </div>
           </div>
           <div>
             <div style={{ margin: "2rem 0" }}>
-              <StarFilled style={{ color: "#FF9933", fontSize: "1.5rem" }} />
+              <StarFilled style={{ color: "#FF9933", fontSize: "1rem" }} />
               评分{selectInfo.score}
             </div>
             <div style={{ margin: "2rem 0" }}>
-              <HeartFilled style={{ color: "#CC3366", fontSize: "1.5rem" }} />
+              <HeartFilled style={{ color: "#CC3366", fontSize: "1rem" }} />
               收藏{selectInfo.collect}
             </div>
           </div>
@@ -293,8 +326,7 @@ function Choose(props) {
           style={{
             display: "flex",
             justifyContent: "center",
-            margin: "2rem",
-            padding: "1rem",
+            padding: "0.5rem",
           }}
         >
           <h3>请选择购买门票日期：</h3>

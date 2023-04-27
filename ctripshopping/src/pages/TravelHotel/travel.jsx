@@ -7,6 +7,7 @@ import Usernavigation from "../../components/usernavigation";
 import Ctripfooter from "../../components/ctripfooter";
 import Sideselect from "../../components/sideselect";
 import Picshow from "../../components/picshow";
+import Linearcard from "../../components/linearcard";
 // redux配置
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -108,7 +109,10 @@ function Travel(props) {
             return {
               label: `${item.label}`,
               key: id,
-              children: <Picshow data={item} month={month} />,
+              children: (
+                // <Picshow data={item} month={month} />,
+                <Linearcard data={item} month={month} />
+              ),
             };
           })}
           onChange={onChangemonth}
@@ -126,13 +130,18 @@ function Travel(props) {
             return {
               label: `${item.label}`,
               key: `${item.label}`,
-              children: <Picshow data={item} theme={theme} />,
+              children: (
+                // <Picshow
+                //   data={item}
+                //   theme={theme}
+                // />
+                <Linearcard data={item} theme={theme} />
+              ),
             };
           })}
           onChange={onChangetheme}
         />
       </Content>
-
       <Ctripfooter />
     </>
   );

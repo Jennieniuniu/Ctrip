@@ -44,6 +44,9 @@ function Usernavigation(props) {
         loginFn.logout();
         navigate("/");
         break;
+      case "service":
+        navigate("/user/robot");
+        break;
       case "back":
         window.history.back();
         break;

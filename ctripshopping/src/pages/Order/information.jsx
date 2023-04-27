@@ -34,20 +34,25 @@ function Information(props) {
   const selectTicketInfo = useLocation();
   const navigate = useNavigate();
   const { selectInfo, ticketChooseInfo } = selectTicketInfo.state;
+  const priceId = ticketChooseInfo.priceId;
   const [form] = Form.useForm();
   const orderStatusStr = "未支付";
   const gotoPay = async (userInfo) => {
     const userInfoArr = Object.values(userInfo);
-    console.log(ticketChooseInfo);
+    // console.log(ticketChooseInfo);
+    const localCoupon = parseInt(localStorage.getItem("localCoupon"));
+    const workid = userData.workid;
     // orderFn.syncOrderAc({});
     const { data } = await orderFn.syncOrderAc({
       selectInfo,
       ticketChooseInfo,
       userInfoArr,
       orderStatusStr,
-      userData,
+      workid,
+      localCoupon,
+      priceId,
     });
-    console.log(data);
+    // console.log(data);
     navigate("/user/travel/location/pay", {
       state: { selectInfo, ticketChooseInfo },
     });
@@ -97,16 +102,15 @@ function Information(props) {
             </div>
             <div>
               <h2>{selectInfo.name}</h2>
-
-              <div style={{ margin: "1rem 0" }}>
+              <div style={{ margin: " -1rem 0 0 0" }}>
                 <EnvironmentTwoTone style={iconStyle} />
                 {selectInfo.address}
               </div>
-              <div style={{ margin: "1rem 0" }}>
+              <div>
                 <CalendarTwoTone style={iconStyle} />
                 日期：{ticketChooseInfo.ticketDate}
               </div>
-              <div style={{ margin: "1rem 0" }}>
+              <div>
                 <CarryOutTwoTone style={iconStyle} />
                 购票:{ticketChooseInfo.ticketStr}
               </div>
@@ -140,7 +144,7 @@ function Information(props) {
                     >
                       <svg
                         t="1682265309080"
-                        class="icon"
+                        className="icon"
                         viewBox="0 0 1024 1024"
                         version="1.1"
                         xmlns="http://www.w3.org/2000/svg"
@@ -152,7 +156,7 @@ function Information(props) {
                           d="M512 0C229.23 0 0 229.23 0 512s229.23 512 512 512 512-229.23 512-512S794.77 0 512 0z m0 964a450.18 450.18 0 0 1-293.37-108.12 337.88 337.88 0 0 1 586.74 0A450.18 450.18 0 0 1 512 964zM367.31 551.37A204.63 204.63 0 1 1 512 611.3a203.27 203.27 0 0 1-144.69-59.93z m482.15 261.35a398.29 398.29 0 0 0-219.34-169.2c86.85-43.4 146.5-133.15 146.5-236.84 0-146.15-118.47-264.63-264.62-264.63S247.38 260.53 247.38 406.68c0 103.7 59.65 193.44 146.5 236.84a398.28 398.28 0 0 0-219.34 169.21 452.3 452.3 0 1 1 674.92 0z"
                           p-id="8486"
                           data-spm-anchor-id="a313x.7781069.0.i0"
-                          class="selected"
+                          className="selected"
                           fill="#1296db"
                         ></path>
                       </svg>
@@ -211,7 +215,7 @@ function Information(props) {
                   <Button
                     htmlType="button"
                     onClick={onFill}
-                    style={{ margin: "0 2rem 0 10rem " }}
+                    style={{ margin: "0 2rem 0 8rem " }}
                   >
                     一键填写我的信息
                   </Button>
@@ -225,14 +229,14 @@ function Information(props) {
         </div>
         <div
           style={{
-            padding: "5rem 2rem 3rem",
+            padding: "15rem 2rem 3rem",
             borderLeft: "1px solid #CCC",
           }}
         >
           <img
             src="../../../QRcode.png"
             alt="二维码"
-            style={{ height: "15rem" }}
+            style={{ height: "15rem", margin: "auto" }}
           />
           <div
             style={{

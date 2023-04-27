@@ -1,70 +1,65 @@
-# Getting Started with Create React App
+# **运行**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ctripshopping文件夹使用yarn install 、yarn start 
 
-## Available Scripts
+ctripserver文件夹使用nodemon app
 
-In the project directory, you can run:
+# **MySQL数据库**
 
-### `npm start`
+数据库配置，ticket表格可以更改订票的时间信息，对应购票时的限定。
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+总共5个表，user用户信息、location地点信息、ticket地点门票信息、picture点赞图片信息、myorder我的订单
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+****
 
-### `npm run build`
+# 主要功能：
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 员工部分
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+**首页**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1.点赞
 
-### `npm run eject`
+点赞后，点赞按钮的Tooltip标签显示发生动态变化，从赞一赞变成感谢点赞！点赞排行榜的数据同步更新
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2.侧边导航栏
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3.选票-只有1月香港和4月上海配置了数据，可进行购票
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+**订单流程**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1.选购：选购之前进行订单预检，检查是否有未完成订单，日期选择范围限定，选购票数库存预检。
 
-## Learn More
+2.填写信息：根据选购票数生成对应的信息填写表格，一键填写用户信息。
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+3.支付：支付订单，查询用户余额是否充足。
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+4.订单支付成功：显示订单编号（编号规则：下单时间+用户id，避免同一时间不同用户下单时造成编号混乱）。
 
-### Code Splitting
+**我的订单**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1.取消订单：根据不同的订单状态，已支付和未支付，进行不同的数据处理。
 
-### Analyzing the Bundle Size
+已支付订单->订单从数据库中删除，库存+1，根据实际消费退还到账户中。
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+未支付订单->订单取消，库存+1，账户不发生变化。
 
-### Making a Progressive Web App
+2.修改用户信息：
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+更改下单时填写的用户信息，同时进行数据格式校验。
 
-### Advanced Configuration
+3未支付订单支付：
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+订单状态改变，余额、优惠券更新。
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `npm run build` fails to minify
+### 管理员部分
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1.员工信息、照片点赞数据的增删改查
+
+2.所有订单取消订单
+
+3.ECharts图表展示

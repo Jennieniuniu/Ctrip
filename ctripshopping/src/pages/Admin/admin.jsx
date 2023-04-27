@@ -93,8 +93,8 @@ export default function Admin() {
         <Content style={contentStyle}>
           <Routes>
             <Route
-              path="/"
-              element={<Navigate to="/admin/role/information" />}
+              path="/admin"
+              element={<Navigate to="/role/information" />}
             ></Route>
             <Route path="/role/information" element={<Information />} />
             <Route path="/role/welfare" element={<Welfare />} />
